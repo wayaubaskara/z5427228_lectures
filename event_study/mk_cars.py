@@ -214,7 +214,8 @@ def _test_mk_cars_df(sample_only=False):
 
 
     """
-    from event_study import mk_rets, mk_events
+    from event_study import mk_events
+    from event_study import mk_rets
 
     def _mk_example_event_df(event_df):
         """ Creates an event df to be used if sample_only is True
