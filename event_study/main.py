@@ -3,7 +3,11 @@
 Main module for the event_study package. Will run the event study for a single
 stock.
 """
-from event_study import download, test_hypo, mk_rets, mk_events, mk_cars
+from event_study import download
+from event_study import mk_rets
+from event_study import mk_events
+from event_study import mk_cars
+from event_study import test_hypo
 
 
 def main(tic, update_csv=True):
@@ -69,8 +73,5 @@ def main(tic, update_csv=True):
 
 if __name__ == "__main__":
     tic = 'TSLA'
-    # NOTE: Keep update_csv = False because the yfinance API is broken
     update_csv = False
     main(tic=tic, update_csv=update_csv)
-
-

@@ -80,5 +80,3 @@ def standardise_colnames(df):
         else:
             return new_name
     return df.rename(columns=_parse_name)
-
-

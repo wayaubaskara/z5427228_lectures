@@ -2,14 +2,12 @@
 
 Utilities to download data from Yahoo Finance
 """
-
 import yfinance as yf
 
 from event_study import config as cfg
-#import config as cfg
 
 
-# -------------------------------------------------------- 
+# --------------------------------------------------------
 #   Function to download recommendations
 # --------------------------------------------------------
 def yf_rec_to_csv(tic, pth,
@@ -35,7 +33,7 @@ def yf_rec_to_csv(tic, pth,
         If None (the default), end is set to the most current date available
     """
     c = yf.Ticker(tic)
-    c.history(start=start, end=end)
+    c.history(start=start, end=end).tz_localize(None)
     # Make sure we only relevant dates
     if start is not None and end is not None:
         df = c.recommendations.loc[start:end]
@@ -49,7 +47,7 @@ def yf_rec_to_csv(tic, pth,
 
 
 def get_data(tic):
-    """ Downloads price and recommendation data for a given ticker `tic` 
+    """ Downloads price and recommendation data for a given ticker `tic`
     given the sample period defined by the `config` variables `START` and
     `END`.
 
@@ -66,15 +64,17 @@ def get_data(tic):
     print(f'Downloading prices for {tic}...')
     df = yf.download(tic,
             start=cfg.START,
-            end=cfg.END)
+            end=cfg.END,
+            ignore_tz=True
+            )
     pth = locs['prc_csv']
     df.to_csv(pth)
     print('Done')
 
     # Download and save recs
     print(f'Downloading recs for {tic}...')
-    yf_rec_to_csv(tic, 
-            pth=locs['rec_csv'], 
+    yf_rec_to_csv(tic,
+            pth=locs['rec_csv'],
             start=cfg.START,
             end=cfg.END)
     print('Done')
@@ -82,4 +82,3 @@ def get_data(tic):
 
 if __name__ == "__main__":
     get_data('tsla')
-
